@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+th:replace="~{fragments/head :: head(
+'Riwayat Upload',
+'/css/dashboard.css'
+)}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/sidebar-mahasiswa :: sidebar}"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Navbar -->
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <!-- Topbar -->
+        <div class="topbar">
+
+            <div>
+
+                <h2>Riwayat Upload Dokumen</h2>
+
+                <small>Seluruh histori dokumen skripsi yang telah diupload.</small>
+
+            </div>
+
+        </div>
+
+        <!-- Riwayat -->
+
+        <div class="card">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Riwayat Dokumen
+
+                </h5>
+
+                <a
+                        th:href="@{/mahasiswa/upload-dokumen}"
+                        class="btn btn-primary">
+
+                    <i class="fa-solid fa-upload"></i>
+
+                    Upload Baru
+
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>No</th>
+
+                        <th>Jenis Dokumen</th>
+
+                        <th>Nama File</th>
+
+                        <th>Tanggal Upload</th>
+
+                        <th>Status</th>
+
+                        <th>Aksi</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>Proposal</td>
+
+                        <td>Proposal_Skripsi.pdf</td>
+
+                        <td>25 Juni 2026</td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                ACC
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-info btn-sm">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                Detail
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>Bab 1</td>
+
+                        <td>Bab1.pdf</td>
+
+                        <td>01 Juli 2026</td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                ACC
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-info btn-sm">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                Detail
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>Bab 2</td>
+
+                        <td>Bab2.pdf</td>
+
+                        <td>08 Juli 2026</td>
+
+                        <td>
+
+                            <span class="badge bg-warning text-dark">
+
+                                REVISI
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-info btn-sm">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                Detail
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>4</td>
+
+                        <td>Bab 3</td>
+
+                        <td>Bab3.pdf</td>
+
+                        <td>15 Juli 2026</td>
+
+                        <td>
+
+                            <span class="badge bg-primary">
+
+                                PROSES
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-info btn-sm">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                Detail
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

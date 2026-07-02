@@ -1,5 +1,7 @@
 package com.monitoringskripsi.model;
 
+import com.monitoringskripsi.entity.User;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -25,11 +27,16 @@ public class Mahasiswa {
     @Column(nullable = false)
     private Integer angkatan;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Mahasiswa() {
     }
+
+    // =========================
+    // GETTER & SETTER
+    // =========================
 
     public Long getId() {
         return id;
@@ -79,12 +86,12 @@ public class Mahasiswa {
         this.angkatan = angkatan;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

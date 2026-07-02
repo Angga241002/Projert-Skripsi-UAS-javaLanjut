@@ -1,125 +1,152 @@
 package com.monitoringskripsi.controller;
 
-import java.util.List;
+import com.monitoringskripsi.entity.Dokumen;
+import com.monitoringskripsi.entity.Progress;
+import com.monitoringskripsi.service.DokumenService;
+import com.monitoringskripsi.service.MahasiswaService;
+import com.monitoringskripsi.service.ProgressService;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.monitoringskripsi.model.Mahasiswa;
-import com.monitoringskripsi.service.MahasiswaService;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.io.IOException;
+import java.nio.file.*;
 
 @Controller
-@RequestMapping("/dosen/mahasiswa")
+@RequestMapping("/mahasiswa")
 public class MahasiswaController {
 
     private final MahasiswaService mahasiswaService;
+    private final DokumenService dokumenService;
+    private final ProgressService progressService;
 
-    public MahasiswaController(MahasiswaService mahasiswaService) {
+    public MahasiswaController(
+            MahasiswaService mahasiswaService,
+            DokumenService dokumenService,
+            ProgressService progressService) {
+
         this.mahasiswaService = mahasiswaService;
+        this.dokumenService = dokumenService;
+        this.progressService = progressService;
     }
 
-    // ================= TAMPIL DATA =================
+    // ================= DASHBOARD =================
 
-    @GetMapping
-    public String index(
-            @RequestParam(required = false) String keyword,
-            Model model) {
-
-        List<Mahasiswa> listMahasiswa = mahasiswaService.cari(keyword);
-
-        model.addAttribute("listMahasiswa", listMahasiswa);
-        model.addAttribute("keyword", keyword);
-
-        return "dosen/mahasiswa";
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "mahasiswa/dashboard";
     }
 
-    // ================= FORM TAMBAH =================
+    // ================= SKRIPSI =================
 
-    @GetMapping("/tambah")
-    public String tambah(Model model) {
-
-        model.addAttribute("mahasiswa", new Mahasiswa());
-
-        return "dosen/tambah-mahasiswa";
+    @GetMapping("/skripsi")
+    public String skripsi() {
+        return "mahasiswa/skripsi";
     }
 
-    // ================= SIMPAN =================
+    // ================= PROGRESS =================
 
-    @PostMapping("/simpan")
-public String simpan(@ModelAttribute Mahasiswa mahasiswa,
-                     RedirectAttributes redirectAttributes) {
-
-    if (mahasiswaService.existsByNim(mahasiswa.getNim())) {
-
-        redirectAttributes.addFlashAttribute(
-                "error",
-                "NIM sudah digunakan!");
-
-        return "redirect:/dosen/mahasiswa/tambah";
+    @GetMapping("/progress")
+    public String progress() {
+        return "mahasiswa/progress";
     }
 
-    mahasiswaService.simpan(mahasiswa);
+    // ================= UPLOAD =================
 
-    redirectAttributes.addFlashAttribute(
-            "success",
-            "Data mahasiswa berhasil ditambahkan.");
+    @GetMapping("/upload-dokumen")
+    public String uploadDokumen() {
+        return "mahasiswa/upload-dokumen";
+    }
 
-    return "redirect:/dosen/mahasiswa";
-}
+    @PostMapping("/upload-dokumen")
+    public String uploadDokumen(
 
-    // ================= FORM EDIT =================
+            @RequestParam("file") MultipartFile file,
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
+            @RequestParam("jenisDokumen") String jenisDokumen,
 
-        Mahasiswa mahasiswa = mahasiswaService.getById(id);
+            @RequestParam("keterangan") String keterangan,
 
-        if (mahasiswa == null) {
-            return "redirect:/dosen/mahasiswa";
+            RedirectAttributes redirectAttributes) {
+
+        try {
+
+            if (file.isEmpty()) {
+
+                redirectAttributes.addFlashAttribute(
+                        "error",
+                        "Silakan pilih file.");
+
+                return "redirect:/mahasiswa/upload-dokumen";
+            }
+
+            if (!file.getOriginalFilename().toLowerCase().endsWith(".pdf")) {
+
+                redirectAttributes.addFlashAttribute(
+                        "error",
+                        "File harus PDF.");
+
+                return "redirect:/mahasiswa/upload-dokumen";
+            }
+
+            String uploadDir = "uploads";
+
+            Files.createDirectories(Paths.get(uploadDir));
+
+            String namaFile =
+                    System.currentTimeMillis()
+                            + "_"
+                            + file.getOriginalFilename();
+
+            Path path = Paths.get(uploadDir, namaFile);
+
+            Files.copy(
+                    file.getInputStream(),
+                    path,
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            Progress progress = progressService.findAll().get(0);
+
+            Dokumen dokumen = new Dokumen();
+
+            dokumen.setProgress(progress);
+            dokumen.setNamaFile(namaFile);
+            dokumen.setFilePath(path.toString());
+
+            // nanti aktif kalau field sudah dibuat
+            // dokumen.setJenisDokumen(jenisDokumen);
+            // dokumen.setKeterangan(keterangan);
+
+            dokumenService.save(dokumen);
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "Dokumen berhasil diupload.");
+
+        } catch (IOException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "Upload gagal.");
         }
 
-        model.addAttribute("mahasiswa", mahasiswa);
-
-        return "dosen/edit-mahasiswa";
+        return "redirect:/mahasiswa/upload-dokumen";
     }
 
-    // ================= UPDATE =================
+    // ================= RIWAYAT =================
 
-    @PostMapping("/update")
-public String update(@ModelAttribute Mahasiswa mahasiswa,
-                     RedirectAttributes redirectAttributes) {
-
-    Mahasiswa cek = mahasiswaService.findByNim(mahasiswa.getNim());
-
-    if (cek != null && !cek.getId().equals(mahasiswa.getId())) {
-
-        redirectAttributes.addFlashAttribute(
-                "error",
-                "NIM sudah digunakan mahasiswa lain.");
-
-        return "redirect:/dosen/mahasiswa/edit/" + mahasiswa.getId();
+    @GetMapping("/riwayat")
+    public String riwayat() {
+        return "mahasiswa/riwayat";
     }
 
-    mahasiswaService.update(mahasiswa);
+    // ================= PROFIL =================
 
-    redirectAttributes.addFlashAttribute(
-            "success",
-            "Data berhasil diperbarui.");
-
-    return "redirect:/dosen/mahasiswa";
-}
-
-    // ================= HAPUS =================
-
-    @GetMapping("/hapus/{id}")
-    public String hapus(@PathVariable Long id) {
-
-        mahasiswaService.hapus(id);
-
-        return "redirect:/dosen/mahasiswa";
+    @GetMapping("/profil")
+    public String profil() {
+        return "mahasiswa/profil";
     }
 
 }

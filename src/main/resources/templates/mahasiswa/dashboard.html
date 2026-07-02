@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+th:replace="~{fragments/head :: head(
+'Dashboard Mahasiswa',
+'/css/dashboard.css'
+)}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+
+            <h3>Monitoring<br>Skripsi</h3>
+
+        </div>
+
+        <div class="sidebar-profile">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+            </div>
+
+            <h5>Mahasiswa</h5>
+
+            <small th:text="${#authentication.name}">Mahasiswa</small>
+
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a class="active" th:href="@{/mahasiswa/dashboard}">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a th:href="@{/mahasiswa/progress}">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>
+
+            <a th:href="@{/mahasiswa/upload-dokumen}">
+                <i class="fa-solid fa-upload"></i>
+                Upload Dokumen
+            </a>
+
+            <a th:href="@{/mahasiswa/riwayat}">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Riwayat
+            </a>
+
+            <a th:href="@{/mahasiswa/profil}">
+                <i class="fa-solid fa-user"></i>
+                Profil
+            </a>
+
+            <form th:action="@{/logout}" method="post">
+
+                <button class="btn w-100 text-start sidebar-logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <!-- Topbar -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h2>Dashboard Mahasiswa</h2>
+
+                <small>Selamat datang di Sistem Monitoring Skripsi</small>
+
+            </div>
+
+        </div>
+
+        <!-- Card -->
+
+        <div class="row g-4">
+
+            <div class="col-lg-3">
+
+                <div class="card card-stat p-4 position-relative">
+
+                    <h6>Judul Skripsi</h6>
+
+                    <h5>Sistem Monitoring Skripsi</h5>
+
+                    <i class="fa-solid fa-book stat-icon"></i>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <div class="card card-stat p-4 position-relative">
+
+                    <h6>Status</h6>
+
+                    <h3 class="text-primary">PROSES</h3>
+
+                    <i class="fa-solid fa-spinner stat-icon"></i>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <div class="card card-stat p-4 position-relative">
+
+                    <h6>Progress</h6>
+
+                    <h3>70%</h3>
+
+                    <i class="fa-solid fa-chart-line stat-icon"></i>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <div class="card card-stat p-4 position-relative">
+
+                    <h6>Dosen Pembimbing</h6>
+
+                    <h5>Dr. Budi Santoso</h5>
+
+                    <i class="fa-solid fa-user-tie stat-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Progress -->
+
+        <div class="card card-stat mt-4 p-4">
+
+            <h5>Progress Skripsi</h5>
+
+            <div class="progress mt-3" style="height:25px;">
+
+                <div class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width:70%;">
+
+                    70%
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Timeline -->
+
+        <div class="card card-stat mt-4 p-4">
+
+            <h5>Progress Terbaru</h5>
+
+            <table class="table table-hover mt-3">
+
+                <thead>
+
+                <tr>
+
+                    <th>Tanggal</th>
+
+                    <th>Kegiatan</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr>
+
+                    <td>01 Juli 2026</td>
+
+                    <td>Upload Bab 1</td>
+
+                    <td><span class="badge bg-primary">Upload</span></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>03 Juli 2026</td>
+
+                    <td>ACC Bab 1</td>
+
+                    <td><span class="badge bg-success">ACC</span></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>07 Juli 2026</td>
+
+                    <td>Upload Bab 2</td>
+
+                    <td><span class="badge bg-warning text-dark">Menunggu</span></td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div> <!-- main-content -->
+
+</div> <!-- container-fluid -->
+
+<th:block th:replace="~{fragments/script :: script}"></th:block>
+
+</body>
+
+</html>

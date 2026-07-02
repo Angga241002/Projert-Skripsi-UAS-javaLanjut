@@ -1,71 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="sidebar">
-      <div class="list-group shadow-sm">
+
+<body>
+
+<div th:fragment="sidebar">
+
+    <div class="list-group shadow-sm">
+
         <a
-          th:href="@{/mahasiswa/dashboard}"
-          class="list-group-item list-group-item-action"
-        >
-          🏠 Dashboard
+                th:href="@{/mahasiswa/dashboard}"
+                class="list-group-item list-group-item-action">
+
+            🏠 Dashboard
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/skripsi}"
-          class="list-group-item list-group-item-action"
-        >
-          📄 Skripsi Saya
+                th:href="@{/mahasiswa/skripsi}"
+                class="list-group-item list-group-item-action">
+
+            📄 Skripsi Saya
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/progress}"
-          class="list-group-item list-group-item-action"
-        >
-          📈 Progress Skripsi
+                th:href="@{/mahasiswa/progress}"
+                class="list-group-item list-group-item-action">
+
+            📈 Progress Skripsi
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/upload}"
-          class="list-group-item list-group-item-action"
-        >
-          📂 Upload Dokumen
+                th:href="@{/mahasiswa/upload-dokumen}"
+                class="list-group-item list-group-item-action">
+
+            📂 Upload Dokumen
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/bimbingan}"
-          class="list-group-item list-group-item-action"
-        >
-          💬 Bimbingan Dosen
+                th:href="@{/mahasiswa/riwayat}"
+                class="list-group-item list-group-item-action">
+
+            🕘 Riwayat Upload
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/jadwal}"
-          class="list-group-item list-group-item-action"
-        >
-          📅 Jadwal Bimbingan
+                th:href="@{/mahasiswa/bimbingan}"
+                class="list-group-item list-group-item-action">
+
+            💬 Bimbingan Dosen
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/notifikasi}"
-          class="list-group-item list-group-item-action"
-        >
-          🔔 Notifikasi
+                th:href="@{/mahasiswa/jadwal}"
+                class="list-group-item list-group-item-action">
+
+            📅 Jadwal Bimbingan
+
         </a>
 
         <a
-          th:href="@{/mahasiswa/profil}"
-          class="list-group-item list-group-item-action"
-        >
-          👤 Profil
+                th:href="@{/mahasiswa/notifikasi}"
+                class="list-group-item list-group-item-action">
+
+            🔔 Notifikasi
+
         </a>
 
         <a
-          th:href="@{/logout}"
-          class="list-group-item list-group-item-action text-danger"
-        >
-          🚪 Logout
+                th:href="@{/mahasiswa/profil}"
+                class="list-group-item list-group-item-action">
+
+            👤 Profil
+
         </a>
-      </div>
+
+        <form th:action="@{/logout}" method="post">
+
+            <button
+                    type="submit"
+                    class="list-group-item list-group-item-action text-danger border-0 bg-white w-100 text-start">
+
+                🚪 Logout
+
+            </button>
+
+        </form>
+
     </div>
-  </body>
+
+</div>
+
+</body>
+
 </html>

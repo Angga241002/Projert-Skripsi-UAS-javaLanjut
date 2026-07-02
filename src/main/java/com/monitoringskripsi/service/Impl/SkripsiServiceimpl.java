@@ -1,4 +1,4 @@
-package com.monitoringskripsi.service.impl;
+package com.monitoringskripsi.service.Impl;
 
 import java.util.List;
 import java.util.Optional;
