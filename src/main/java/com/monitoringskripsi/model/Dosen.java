@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.monitoringskripsi.entity.Skripsi;
 
+import java.util.List;
+import com.monitoringskripsi.entity.Skripsi;
 import jakarta.persistence.*;
 import lombok.*;
 

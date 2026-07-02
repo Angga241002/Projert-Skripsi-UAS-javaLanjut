@@ -21,4 +21,6 @@ public interface SkripsiRepository extends JpaRepository<Skripsi, Long> {
 
     long countByStatus(StatusSkripsi status);
 
+    List<Skripsi> findByJudulContainingIgnoreCase(String judul);
+
 }

@@ -1,0 +1,91 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Progress Skripsi</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container mt-4">
+      <div class="d-flex justify-content-between mb-3">
+        <h3>
+          <i class="fa-solid fa-chart-line"></i>
+
+          Progress Skripsi
+        </h3>
+
+        <a th:href="@{/mahasiswa/progress/tambah}" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i>
+
+          Tambah Progress
+        </a>
+      </div>
+
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>No</th>
+
+            <th>BAB</th>
+
+            <th>Judul Progress</th>
+
+            <th>Persentase</th>
+
+            <th>Status</th>
+
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="progress, stat : ${progressList}">
+            <td th:text="${stat.count}"></td>
+
+            <td th:text="${progress.bab}"></td>
+
+            <td th:text="${progress.judulProgress}"></td>
+
+            <td th:text="${progress.persentase + '%'}"></td>
+
+            <td>
+              <span
+                class="badge bg-warning"
+                th:if="${progress.status.name()=='PROSES'}"
+              >
+                PROSES
+              </span>
+
+              <span
+                class="badge bg-success"
+                th:if="${progress.status.name()=='ACC'}"
+              >
+                ACC
+              </span>
+
+              <span
+                class="badge bg-danger"
+                th:if="${progress.status.name()=='REVISI'}"
+              >
+                REVISI
+              </span>
+            </td>
+
+            <td th:text="${progress.tanggal}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

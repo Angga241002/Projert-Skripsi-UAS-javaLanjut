@@ -27,9 +27,11 @@ public class MahasiswaService {
     }
 
     // Cari berdasarkan id
-    public Mahasiswa getById(Long id) {
-        return mahasiswaRepository.findById(id).orElse(null);
-    }
+    public Mahasiswa findByUserId(Long userId) {
+
+    return mahasiswaRepository.findByUserId(userId);
+
+}
 
     // Update mahasiswa
     public Mahasiswa update(Mahasiswa mahasiswa) {

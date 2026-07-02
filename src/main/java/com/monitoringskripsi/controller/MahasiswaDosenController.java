@@ -9,15 +9,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.monitoringskripsi.model.Mahasiswa;
 import com.monitoringskripsi.service.MahasiswaService;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/dosen/mahasiswa")
-public class MahasiswaController {
+public class MahasiswaDosenController {
 
     private final MahasiswaService mahasiswaService;
 
-    public MahasiswaController(MahasiswaService mahasiswaService) {
+    public MahasiswaDosenController(MahasiswaService mahasiswaService) {
         this.mahasiswaService = mahasiswaService;
     }
 
@@ -49,31 +48,34 @@ public class MahasiswaController {
     // ================= SIMPAN =================
 
     @PostMapping("/simpan")
-public String simpan(@ModelAttribute Mahasiswa mahasiswa,
-                     RedirectAttributes redirectAttributes) {
+    public String simpan(
+            @ModelAttribute Mahasiswa mahasiswa,
+            RedirectAttributes redirectAttributes) {
 
-    if (mahasiswaService.existsByNim(mahasiswa.getNim())) {
+        if (mahasiswaService.existsByNim(mahasiswa.getNim())) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "NIM sudah digunakan!");
+
+            return "redirect:/dosen/mahasiswa/tambah";
+        }
+
+        mahasiswaService.simpan(mahasiswa);
 
         redirectAttributes.addFlashAttribute(
-                "error",
-                "NIM sudah digunakan!");
+                "success",
+                "Data mahasiswa berhasil ditambahkan.");
 
-        return "redirect:/dosen/mahasiswa/tambah";
+        return "redirect:/dosen/mahasiswa";
     }
-
-    mahasiswaService.simpan(mahasiswa);
-
-    redirectAttributes.addFlashAttribute(
-            "success",
-            "Data mahasiswa berhasil ditambahkan.");
-
-    return "redirect:/dosen/mahasiswa";
-}
 
     // ================= FORM EDIT =================
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(
+            @PathVariable Long id,
+            Model model) {
 
         Mahasiswa mahasiswa = mahasiswaService.getById(id);
 
@@ -89,35 +91,42 @@ public String simpan(@ModelAttribute Mahasiswa mahasiswa,
     // ================= UPDATE =================
 
     @PostMapping("/update")
-public String update(@ModelAttribute Mahasiswa mahasiswa,
-                     RedirectAttributes redirectAttributes) {
+    public String update(
+            @ModelAttribute Mahasiswa mahasiswa,
+            RedirectAttributes redirectAttributes) {
 
-    Mahasiswa cek = mahasiswaService.findByNim(mahasiswa.getNim());
+        Mahasiswa cek = mahasiswaService.findByNim(mahasiswa.getNim());
 
-    if (cek != null && !cek.getId().equals(mahasiswa.getId())) {
+        if (cek != null && !cek.getId().equals(mahasiswa.getId())) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "NIM sudah digunakan mahasiswa lain.");
+
+            return "redirect:/dosen/mahasiswa/edit/" + mahasiswa.getId();
+        }
+
+        mahasiswaService.update(mahasiswa);
 
         redirectAttributes.addFlashAttribute(
-                "error",
-                "NIM sudah digunakan mahasiswa lain.");
+                "success",
+                "Data mahasiswa berhasil diperbarui.");
 
-        return "redirect:/dosen/mahasiswa/edit/" + mahasiswa.getId();
+        return "redirect:/dosen/mahasiswa";
     }
-
-    mahasiswaService.update(mahasiswa);
-
-    redirectAttributes.addFlashAttribute(
-            "success",
-            "Data berhasil diperbarui.");
-
-    return "redirect:/dosen/mahasiswa";
-}
 
     // ================= HAPUS =================
 
     @GetMapping("/hapus/{id}")
-    public String hapus(@PathVariable Long id) {
+    public String hapus(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes) {
 
         mahasiswaService.hapus(id);
+
+        redirectAttributes.addFlashAttribute(
+                "success",
+                "Data mahasiswa berhasil dihapus.");
 
         return "redirect:/dosen/mahasiswa";
     }

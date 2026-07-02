@@ -1,111 +1,60 @@
 package com.monitoringskripsi.controller;
 
 import com.monitoringskripsi.entity.Progress;
-import com.monitoringskripsi.entity.Skripsi;
 import com.monitoringskripsi.enums.StatusProgress;
-import com.monitoringskripsi.repository.ProgressRepository;
-import com.monitoringskripsi.repository.SkripsiRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.monitoringskripsi.service.ProgressService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/dosen/progress")
 public class ProgressController {
 
-    @Autowired
-    private ProgressRepository progressRepository;
+    private final ProgressService progressService;
 
-    @Autowired
-    private SkripsiRepository skripsiRepository;
+    public ProgressController(ProgressService progressService) {
+        this.progressService = progressService;
+    }
 
-    // ============================
-    // TAMPILKAN PROGRESS
-    // ============================
-    @GetMapping("/{skripsiId}")
-    public String index(@PathVariable Long skripsiId, Model model) {
+    @GetMapping
+    public String index(Model model) {
 
-        List<Progress> list = progressRepository.findBySkripsiId(skripsiId);
-
-        model.addAttribute("progressList", list);
-        model.addAttribute("skripsiId", skripsiId);
+        model.addAttribute("progressList",
+                progressService.findAll());
 
         return "dosen/progress/index";
     }
 
-    // ============================
-    // FORM TAMBAH PROGRESS
-    // ============================
-    @GetMapping("/tambah/{skripsiId}")
-    public String formTambah(@PathVariable Long skripsiId, Model model) {
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id,
+                         Model model) {
 
-        model.addAttribute("progress", new Progress());
-        model.addAttribute("skripsiId", skripsiId);
+        Progress progress = progressService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Progress tidak ditemukan"));
 
-        return "dosen/progress/form";
+        model.addAttribute("progress", progress);
+
+        model.addAttribute("statusList",
+                StatusProgress.values());
+
+        return "dosen/progress/detail";
     }
 
-    // ============================
-    // SIMPAN PROGRESS
-    // ============================
-    @PostMapping("/simpan/{skripsiId}")
-public String simpan(@PathVariable Long skripsiId,
-                     @ModelAttribute Progress progress) {
+    @PostMapping("/update")
+    public String update(@ModelAttribute Progress progress) {
 
-    Skripsi skripsi = skripsiRepository.findById(skripsiId).orElse(null);
+        Progress data = progressService.findById(progress.getId())
+                .orElseThrow(() -> new RuntimeException("Progress tidak ditemukan"));
 
-    if (skripsi == null) {
-        return "redirect:/dosen/skripsi";
+        data.setStatus(progress.getStatus());
+
+        data.setKomentarDosen(progress.getKomentarDosen());
+
+        progressService.save(data);
+
+        return "redirect:/dosen/progress";
     }
 
-    progress.setSkripsi(skripsi);
-
-    // DEFAULT STATUS HARUS PROSES
-    if (progress.getStatus() == null) {
-        progress.setStatus(StatusProgress.PROSES);
-    }
-
-    progressRepository.save(progress);
-
-    return "redirect:/dosen/progress/" + skripsiId;
-}
-
-    // ============================
-    // ACC PROGRESS
-    // ============================
-    @GetMapping("/acc/{id}")
-    public String acc(@PathVariable Long id) {
-
-        Progress progress = progressRepository.findById(id).orElse(null);
-
-        if (progress != null) {
-            progress.setStatus(StatusProgress.ACC);
-            progressRepository.save(progress);
-
-            return "redirect:/dosen/progress/" + progress.getSkripsi().getId();
-        }
-
-        return "redirect:/dosen/dashboard";
-    }
-
-    // ============================
-    // REVISI PROGRESS
-    // ============================
-    @GetMapping("/revisi/{id}")
-    public String revisi(@PathVariable Long id) {
-
-        Progress progress = progressRepository.findById(id).orElse(null);
-
-        if (progress != null) {
-            progress.setStatus(StatusProgress.REVISI);
-            progressRepository.save(progress);
-
-            return "redirect:/dosen/progress/" + progress.getSkripsi().getId();
-        }
-
-        return "redirect:/dosen/dashboard";
-    }
 }

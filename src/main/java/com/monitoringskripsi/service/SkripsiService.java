@@ -16,4 +16,7 @@ public interface SkripsiService {
     void deleteById(Long id);
 
     long count();
+
+    List<Skripsi> search(String keyword);
+
 }

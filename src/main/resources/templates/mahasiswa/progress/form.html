@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Tambah Progress</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container mt-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          Tambah Progress Skripsi
+        </div>
+
+        <div class="card-body">
+          <form th:action="@{/mahasiswa/progress/simpan}" method="post">
+            <div class="mb-3">
+              <label>BAB</label>
+
+              <input type="text" name="bab" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label>Judul Progress</label>
+
+              <input
+                type="text"
+                name="judulProgress"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label>Persentase</label>
+
+              <input
+                type="number"
+                name="persentase"
+                min="0"
+                max="100"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label>Catatan</label>
+
+              <textarea name="catatan" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label>Tanggal</label>
+
+              <input type="date" name="tanggal" class="form-control" />
+            </div>
+
+            <button class="btn btn-success">Simpan</button>
+
+            <a th:href="@{/mahasiswa/progress}" class="btn btn-secondary">
+              Kembali
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

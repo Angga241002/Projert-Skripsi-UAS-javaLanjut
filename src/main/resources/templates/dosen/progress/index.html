@@ -2,84 +2,128 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Monitoring Progress Skripsi</title>
+    <title>Monitoring Progress</title>
 
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
   </head>
 
   <body>
-    <div class="container mt-5">
-      <h2>Monitoring Progress Skripsi</h2>
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/sidebar-dosen :: sidebar}"></div>
 
-      <hr />
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="topbar">
+        <h3>
+          <i class="fa-solid fa-chart-line"></i>
+          Monitoring Progress Skripsi
+        </h3>
+      </div>
 
-      <!-- Tombol tambah progress -->
-      <a
-        th:href="@{'/dosen/progress/tambah/' + ${skripsiId}}"
-        class="btn btn-primary mb-3"
-      >
-        + Tambah Progress
-      </a>
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <i class="fa-solid fa-list-check"></i>
 
-      <table class="table table-bordered table-striped">
-        <thead class="table-primary">
-          <tr>
-            <th>No</th>
-            <th>Bab</th>
-            <th>Judul Progress</th>
-            <th>Persentase</th>
-            <th>Catatan</th>
-            <th>Tanggal</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
+          Data Progress Mahasiswa
+        </div>
 
-        <tbody>
-          <tr th:each="p, stat : ${progressList}">
-            <td th:text="${stat.count}"></td>
-            <td th:text="${p.bab}"></td>
-            <td th:text="${p.judulProgress}"></td>
-            <td th:text="${p.persentase + '%'}"></td>
-            <td th:text="${p.catatan}"></td>
-            <td th:text="${p.tanggal}"></td>
+        <div class="card-body">
+          <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>No</th>
+                <th>Mahasiswa</th>
+                <th>Judul Skripsi</th>
+                <th>BAB</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+                <th width="150">Aksi</th>
+              </tr>
+            </thead>
 
-            <!-- STATUS -->
-            <td>
-              <span
-                class="badge"
-                th:text="${p.status}"
-                th:classappend="${
-                          p.status == 'ACC' ? ' bg-success' :
-                          p.status == 'REVISI' ? ' bg-danger' :
-                          ' bg-warning'
-                      }"
-              >
-              </span>
-            </td>
+            <tbody>
+              <tr th:each="progress, stat : ${progressList}">
+                <td th:text="${stat.count}"></td>
 
-            <!-- AKSI -->
-            <td>
-              <a
-                th:href="@{'/dosen/progress/acc/' + ${p.id}}"
-                class="btn btn-success btn-sm"
-              >
-                ACC
-              </a>
+                <td th:text="${progress.skripsi.mahasiswa.nama}"></td>
 
-              <a
-                th:href="@{'/dosen/progress/revisi/' + ${p.id}}"
-                class="btn btn-warning btn-sm"
-              >
-                Revisi
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <td th:text="${progress.skripsi.judul}"></td>
+
+                <td th:text="${progress.bab}"></td>
+
+                <td>
+                  <div class="progress">
+                    <div
+                      class="progress-bar bg-success"
+                      role="progressbar"
+                      th:style="'width:'+${progress.persentase}+'%'"
+                    >
+                      <span th:text="${progress.persentase}+'%'"></span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <span
+                    class="badge bg-warning"
+                    th:if="${progress.status.name()=='PROSES'}"
+                  >
+                    PROSES
+                  </span>
+
+                  <span
+                    class="badge bg-success"
+                    th:if="${progress.status.name()=='ACC'}"
+                  >
+                    ACC
+                  </span>
+
+                  <span
+                    class="badge bg-danger"
+                    th:if="${progress.status.name()=='REVISI'}"
+                  >
+                    REVISI
+                  </span>
+                </td>
+
+                <td th:text="${progress.tanggal}"></td>
+
+                <td>
+                  <a
+                    class="btn btn-sm btn-primary"
+                    th:href="@{'/dosen/progress/detail/' + ${progress.id}}"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+
+                    Detail
+                  </a>
+                </td>
+              </tr>
+
+              <tr th:if="${#lists.isEmpty(progressList)}">
+                <td colspan="8" class="text-center text-muted">
+                  Belum ada data progress.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </body>
 </html>

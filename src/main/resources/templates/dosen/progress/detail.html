@@ -1,0 +1,167 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Detail Progress</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}" />
+
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+  </head>
+
+  <body>
+    <div th:replace="~{fragments/sidebar-dosen :: sidebar}"></div>
+
+    <div class="main-content">
+      <div class="topbar">
+        <h3>
+          <i class="fa-solid fa-file-lines"></i>
+
+          Detail Progress Skripsi
+        </h3>
+      </div>
+
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          Detail Progress Mahasiswa
+        </div>
+
+        <div class="card-body">
+          <form th:action="@{/dosen/progress/update}" method="post">
+            <input type="hidden" name="id" th:value="${progress.id}" />
+
+            <input
+              type="hidden"
+              name="skripsi.id"
+              th:value="${progress.skripsi.id}"
+            />
+
+            <div class="mb-3">
+              <label class="form-label"> Mahasiswa </label>
+
+              <input
+                type="text"
+                class="form-control"
+                th:value="${progress.skripsi.mahasiswa.nama}"
+                readonly
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label"> Judul Skripsi </label>
+
+              <input
+                type="text"
+                class="form-control"
+                th:value="${progress.skripsi.judul}"
+                readonly
+              />
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label"> BAB </label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  name="bab"
+                  th:value="${progress.bab}"
+                  readonly
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label"> Persentase </label>
+
+                <input
+                  type="number"
+                  class="form-control"
+                  name="persentase"
+                  th:value="${progress.persentase}"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <br />
+
+            <div class="mb-3">
+              <label class="form-label"> Judul Progress </label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="judulProgress"
+                th:value="${progress.judulProgress}"
+                readonly
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label"> Catatan Mahasiswa </label>
+
+              <textarea
+                class="form-control"
+                rows="5"
+                readonly
+                th:text="${progress.catatan}"
+              >
+              </textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label"> Komentar Dosen </label>
+
+              <textarea
+                class="form-control"
+                rows="5"
+                name="komentarDosen"
+                th:text="${progress.komentarDosen}"
+              >
+              </textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label"> Status Progress </label>
+
+              <select class="form-select" name="status">
+                <option
+                  th:each="s : ${statusList}"
+                  th:value="${s}"
+                  th:text="${s}"
+                  th:selected="${s==progress.status}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a th:href="@{/dosen/progress}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Kembali
+              </a>
+
+              <button class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Simpan Validasi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

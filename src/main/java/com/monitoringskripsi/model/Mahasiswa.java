@@ -1,6 +1,9 @@
 package com.monitoringskripsi.model;
 
+import com.monitoringskripsi.entity.Skripsi;
+
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "mahasiswa")
@@ -86,5 +89,8 @@ public class Mahasiswa {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @OneToMany(mappedBy = "mahasiswa")
+    private List<Skripsi> daftarSkripsi;
 
 }

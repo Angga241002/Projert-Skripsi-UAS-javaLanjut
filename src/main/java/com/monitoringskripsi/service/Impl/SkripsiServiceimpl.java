@@ -42,4 +42,11 @@ public class SkripsiServiceimpl implements SkripsiService {
     public long count() {
         return skripsiRepository.count();
     }
+
+    @Override
+    public List<Skripsi> search(String keyword) {
+
+        return skripsiRepository.findByJudulContainingIgnoreCase(keyword);
+
+    }
 }
