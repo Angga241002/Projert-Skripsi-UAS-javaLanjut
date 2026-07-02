@@ -1,63 +1,64 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <div th:fragment="sidebar">
-      <div
-        class="bg-dark text-white rounded shadow p-3"
-        style="min-height: 95vh"
-      >
-        <h4 class="text-center mb-4">🎓 DOSEN</h4>
+    <div class="sidebar" th:fragment="sidebar">
+      <div class="sidebar-header">
+        <i class="fa-solid fa-graduation-cap"></i>
 
-        <div class="list-group">
-          <a
-            th:href="@{/dosen/dashboard}"
-            class="list-group-item list-group-item-action"
-          >
-            🏠 Dashboard
-          </a>
+        <h3>
+          Monitoring<br />
+          Skripsi
+        </h3>
+      </div>
 
-          <a
-            th:href="@{/dosen/skripsi}"
-            class="list-group-item list-group-item-action"
-          >
-            📄 Data Skripsi
-          </a>
-
-          <a
-            th:href="@{/dosen/progress}"
-            class="list-group-item list-group-item-action"
-          >
-            📈 Monitoring Progress
-          </a>
-
-          <a
-            th:href="@{/dosen/bimbingan}"
-            class="list-group-item list-group-item-action"
-          >
-            💬 Bimbingan
-          </a>
-
-          <a
-            th:href="@{/dosen/laporan}"
-            class="list-group-item list-group-item-action"
-          >
-            📊 Laporan
-          </a>
-
-          <a
-            th:href="@{/dosen/profil}"
-            class="list-group-item list-group-item-action"
-          >
-            👤 Profil
-          </a>
-
-          <a
-            th:href="@{/logout}"
-            class="list-group-item list-group-item-action text-danger"
-          >
-            🚪 Logout
-          </a>
+      <div class="sidebar-profile">
+        <div class="profile-image">
+          <i class="fa-solid fa-user"></i>
         </div>
+
+        <h5>Dosen</h5>
+
+        <small>Pembimbing Skripsi</small>
+      </div>
+
+      <div class="sidebar-menu">
+        <a th:href="@{/dosen/dashboard}">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+
+        <a th:href="@{/dosen/skripsi}">
+          <i class="fa-solid fa-book-open"></i>
+          Data Skripsi
+        </a>
+
+        <a th:href="@{/dosen/progress}">
+          <i class="fa-solid fa-chart-line"></i>
+          Monitoring Progress
+        </a>
+
+        <a th:href="@{/dosen/bimbingan}">
+          <i class="fa-solid fa-comments"></i>
+          Bimbingan
+        </a>
+
+        <a th:href="@{/dosen/laporan}">
+          <i class="fa-solid fa-file-lines"></i>
+          Laporan
+        </a>
+
+        <a th:href="@{/dosen/profil}">
+          <i class="fa-solid fa-user"></i>
+          Profil
+        </a>
+
+        <form th:action="@{/logout}" method="post">
+          <button class="btn w-100 text-start sidebar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+          </button>
+        </form>
       </div>
     </div>
   </body>

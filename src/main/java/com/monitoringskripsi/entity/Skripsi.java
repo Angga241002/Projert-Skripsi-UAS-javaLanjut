@@ -3,6 +3,7 @@ package com.monitoringskripsi.entity;
 import java.time.LocalDate;
 
 import com.monitoringskripsi.enums.StatusSkripsi;
+import com.monitoringskripsi.model.Dosen;
 import com.monitoringskripsi.model.Mahasiswa;
 
 import jakarta.persistence.*;
@@ -21,22 +22,21 @@ public class Skripsi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String judul;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     @Builder.Default
     private StatusSkripsi status = StatusSkripsi.PROSES;
 
     @Column(name = "tanggal_mulai")
     private LocalDate tanggalMulai;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mahasiswa_id")
     private Mahasiswa mahasiswa;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dosen_id")
     private Dosen dosen;
 

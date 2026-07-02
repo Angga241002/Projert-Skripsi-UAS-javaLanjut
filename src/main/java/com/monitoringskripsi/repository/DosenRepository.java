@@ -1,8 +1,15 @@
 package com.monitoringskripsi.repository;
 
-import com.monitoringskripsi.entity.Dosen;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.monitoringskripsi.model.Dosen;
+
+@Repository
 public interface DosenRepository extends JpaRepository<Dosen, Long> {
+
+    Optional<Dosen> findByNidn(String nidn);
 
 }

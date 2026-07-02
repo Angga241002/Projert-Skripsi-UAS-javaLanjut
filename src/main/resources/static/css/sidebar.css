@@ -1,54 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+
+  width: 260px;
   height: 100vh;
+
   background: #1e3a8a;
+
   overflow-y: auto;
+  overflow-x: hidden;
+
   z-index: 1000;
-  transition: left 0.3s ease;
+
+  scrollbar-width: thin;
 }
 
+/* Logo */
 .sidebar-header {
-  padding: 25px;
+  padding: 28px 20px;
   text-align: center;
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h3 {
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sidebar-header i {
+  font-size: 42px;
+  color: #fbbf24;
+}
+
+/* Profil */
+.sidebar-profile {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-image {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: white;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  margin: auto;
+}
+
+.sidebar-profile h5 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.sidebar-profile small {
+  color: #d1d5db;
+}
+
+/* Menu */
+.sidebar-menu {
+  flex: 1;
+  padding: 15px 0;
 }
 
 .sidebar-menu a {
   display: flex;
   align-items: center;
   gap: 15px;
+
   color: white;
   text-decoration: none;
-  padding: 18px 25px;
+
+  padding: 15px 25px;
+  margin: 5px 12px;
+
+  border-radius: 10px;
+
   transition: 0.3s;
 }
 
+.sidebar-menu a i {
+  width: 25px;
+  font-size: 18px;
+}
+
 .sidebar-menu a:hover {
-  background: #2952cc;
+  background: #374151;
+  transform: translateX(5px);
 }
 
-.sidebar-menu .active {
-  background: #2952cc;
-  border-left: 4px solid gold;
+.sidebar-menu a.active {
+  background: #2563eb;
 }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
-  z-index: 999;
+.sidebar-menu a.logout {
+  color: #ffb4b4;
 }
 
-.overlay.show {
-  opacity: 1;
-  visibility: visible;
+.sidebar-menu a.logout:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.sidebar-logout {
+  margin: 15px 12px;
+  border: none;
+  background: none;
+  color: #ffb4b4;
+  padding: 15px 25px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.sidebar-logout:hover {
+  background: #dc2626;
+  color: white;
 }

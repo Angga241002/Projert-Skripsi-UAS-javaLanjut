@@ -1,4 +1,8 @@
-package com.monitoringskripsi.entity;
+package com.monitoringskripsi.model;
+
+import java.util.List;
+
+import com.monitoringskripsi.entity.Skripsi;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,11 +26,17 @@ public class Dosen {
     @Column(nullable = false)
     private String nama;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(length = 20)
+    private String noHp;
+
+    private String fakultas;
+
+    private String programStudi;
+
+    @OneToMany(mappedBy = "dosen")
+    private List<Skripsi> daftarSkripsi;
 
 }
