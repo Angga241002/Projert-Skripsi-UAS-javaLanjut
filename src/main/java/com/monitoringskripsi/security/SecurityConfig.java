@@ -24,6 +24,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @SuppressWarnings("deprecation")
     @Bean
     public AuthenticationProvider authenticationProvider() {
 

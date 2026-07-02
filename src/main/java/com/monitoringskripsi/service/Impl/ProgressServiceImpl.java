@@ -1,51 +1,41 @@
 package com.monitoringskripsi.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.monitoringskripsi.entity.Progress;
+import com.monitoringskripsi.entity.Skripsi;
 import com.monitoringskripsi.repository.ProgressRepository;
 import com.monitoringskripsi.service.ProgressService;
 
 @Service
 public class ProgressServiceImpl implements ProgressService {
 
-    private final ProgressRepository progressRepository;
+    private final ProgressRepository repository;
 
-    public ProgressServiceImpl(ProgressRepository progressRepository) {
-        this.progressRepository = progressRepository;
+    public ProgressServiceImpl(ProgressRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Progress> findAll() {
-        return progressRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
-    public Optional<Progress> findById(Long id) {
-        return progressRepository.findById(id);
+    public List<Progress> findBySkripsi(Skripsi skripsi) {
+        return repository.findBySkripsi(skripsi);
     }
 
     @Override
     public Progress save(Progress progress) {
-        return progressRepository.save(progress);
+        return repository.save(progress);
     }
 
     @Override
-    public void deleteById(Long id) {
-        progressRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Progress> search(String keyword) {
-
-        if (keyword == null || keyword.isBlank()) {
-            return progressRepository.findAll();
-        }
-
-        return progressRepository.findByBabContainingIgnoreCase(keyword);
+    public Progress findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
 }

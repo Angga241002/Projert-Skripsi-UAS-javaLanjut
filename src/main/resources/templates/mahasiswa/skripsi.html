@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+th:replace="~{fragments/head :: head(
+'Skripsi Saya',
+'/css/dashboard.css'
+)}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div th:replace="~{fragments/sidebar-mahasiswa :: sidebar}"></div>
+
+    <main class="main-content">
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="topbar">
+
+            <div>
+
+                <h2>Skripsi Saya</h2>
+
+                <small>Informasi skripsi yang sedang dikerjakan.</small>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    <i class="fa-solid fa-book"></i>
+
+                    Data Skripsi
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table">
+
+                    <tr>
+
+                        <th width="220">Judul Skripsi</th>
+
+                        <td>Sistem Monitoring Skripsi Berbasis Web</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Status</th>
+
+                        <td>
+
+                            <span class="badge bg-primary">
+
+                                PROSES
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Dosen Pembimbing</th>
+
+                        <td>Dr. Budi Santoso, S.Kom., M.Kom.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Tanggal Mulai</th>
+
+                        <td>12 Februari 2026</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Progress</th>
+
+                        <td>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar bg-success"
+                                    style="width:60%;">
+
+                                    60%
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+                <div class="mt-4">
+
+                    <a
+                        th:href="@{/mahasiswa/progress}"
+                        class="btn btn-primary">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Lihat Progress
+
+                    </a>
+
+                    <a
+                        th:href="@{/mahasiswa/upload-dokumen}"
+                        class="btn btn-success">
+
+                        <i class="fa-solid fa-upload"></i>
+
+                        Upload Dokumen
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

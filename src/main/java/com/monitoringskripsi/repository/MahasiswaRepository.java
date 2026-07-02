@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.monitoringskripsi.entity.User;
 
 import com.monitoringskripsi.model.Mahasiswa;
 
@@ -17,5 +18,7 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {
     Mahasiswa findByNim(String nim);
 
     Mahasiswa findByUserId(Long userId);
+
+    Mahasiswa findByUser(User user);
 
 }

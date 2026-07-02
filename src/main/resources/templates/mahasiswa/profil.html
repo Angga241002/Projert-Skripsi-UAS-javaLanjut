@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+th:replace="~{fragments/head :: head(
+'Profil Mahasiswa',
+'/css/profil.css'
+)}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/sidebar-mahasiswa :: sidebar}"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Navbar -->
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="topbar">
+
+            <div>
+
+                <h2>Profil Mahasiswa</h2>
+
+                <small>Informasi data diri mahasiswa</small>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Foto -->
+
+            <div class="col-lg-4">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <img
+                                src="https://ui-avatars.com/api/?name=Mahasiswa"
+                                class="rounded-circle mb-3"
+                                width="150">
+
+                        <h4 th:text="${#authentication.name}">
+                            Nama Mahasiswa
+                        </h4>
+
+                        <button class="btn btn-primary mt-2">
+
+                            <i class="fa-solid fa-camera"></i>
+
+                            Ubah Foto
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Biodata -->
+
+            <div class="col-lg-8">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        Biodata Mahasiswa
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-borderless">
+
+                            <tr>
+
+                                <th width="200">Nama</th>
+
+                                <td th:text="${#authentication.name}">
+                                    Rangga
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>NIM</th>
+
+                                <td>221234567</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>Email</th>
+
+                                <td>rangga@email.com</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>No HP</th>
+
+                                <td>08123456789</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>Program Studi</th>
+
+                                <td>Teknik Informatika</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>Angkatan</th>
+
+                                <td>2022</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>Dosen Pembimbing</th>
+
+                                <td>Dr. Budi Santoso</td>
+
+                            </tr>
+
+                        </table>
+
+                        <button class="btn btn-warning">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit Profil
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

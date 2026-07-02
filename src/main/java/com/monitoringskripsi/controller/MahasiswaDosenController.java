@@ -27,10 +27,16 @@ public class MahasiswaDosenController {
             @RequestParam(required = false) String keyword,
             Model model) {
 
-        List<Mahasiswa> listMahasiswa = mahasiswaService.cari(keyword);
+        List<Mahasiswa> listMahasiswa =
+                mahasiswaService.cari(keyword);
 
-        model.addAttribute("listMahasiswa", listMahasiswa);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute(
+                "listMahasiswa",
+                listMahasiswa);
+
+        model.addAttribute(
+                "keyword",
+                keyword);
 
         return "dosen/mahasiswa";
     }
@@ -40,7 +46,9 @@ public class MahasiswaDosenController {
     @GetMapping("/tambah")
     public String tambah(Model model) {
 
-        model.addAttribute("mahasiswa", new Mahasiswa());
+        model.addAttribute(
+                "mahasiswa",
+                new Mahasiswa());
 
         return "dosen/tambah-mahasiswa";
     }
@@ -49,14 +57,16 @@ public class MahasiswaDosenController {
 
     @PostMapping("/simpan")
     public String simpan(
+
             @ModelAttribute Mahasiswa mahasiswa,
+
             RedirectAttributes redirectAttributes) {
 
         if (mahasiswaService.existsByNim(mahasiswa.getNim())) {
 
             redirectAttributes.addFlashAttribute(
                     "error",
-                    "NIM sudah digunakan!");
+                    "NIM sudah digunakan.");
 
             return "redirect:/dosen/mahasiswa/tambah";
         }
@@ -65,7 +75,7 @@ public class MahasiswaDosenController {
 
         redirectAttributes.addFlashAttribute(
                 "success",
-                "Data mahasiswa berhasil ditambahkan.");
+                "Mahasiswa berhasil ditambahkan.");
 
         return "redirect:/dosen/mahasiswa";
     }
@@ -77,13 +87,16 @@ public class MahasiswaDosenController {
             @PathVariable Long id,
             Model model) {
 
-        Mahasiswa mahasiswa = mahasiswaService.getById(id);
+        Mahasiswa mahasiswa =
+                mahasiswaService.getById(id);
 
         if (mahasiswa == null) {
             return "redirect:/dosen/mahasiswa";
         }
 
-        model.addAttribute("mahasiswa", mahasiswa);
+        model.addAttribute(
+                "mahasiswa",
+                mahasiswa);
 
         return "dosen/edit-mahasiswa";
     }
@@ -92,16 +105,21 @@ public class MahasiswaDosenController {
 
     @PostMapping("/update")
     public String update(
+
             @ModelAttribute Mahasiswa mahasiswa,
+
             RedirectAttributes redirectAttributes) {
 
-        Mahasiswa cek = mahasiswaService.findByNim(mahasiswa.getNim());
+        Mahasiswa cek =
+                mahasiswaService.findByNim(
+                        mahasiswa.getNim());
 
-        if (cek != null && !cek.getId().equals(mahasiswa.getId())) {
+        if (cek != null &&
+                !cek.getId().equals(mahasiswa.getId())) {
 
             redirectAttributes.addFlashAttribute(
                     "error",
-                    "NIM sudah digunakan mahasiswa lain.");
+                    "NIM sudah digunakan.");
 
             return "redirect:/dosen/mahasiswa/edit/" + mahasiswa.getId();
         }
@@ -110,7 +128,7 @@ public class MahasiswaDosenController {
 
         redirectAttributes.addFlashAttribute(
                 "success",
-                "Data mahasiswa berhasil diperbarui.");
+                "Data berhasil diperbarui.");
 
         return "redirect:/dosen/mahasiswa";
     }
@@ -126,7 +144,7 @@ public class MahasiswaDosenController {
 
         redirectAttributes.addFlashAttribute(
                 "success",
-                "Data mahasiswa berhasil dihapus.");
+                "Mahasiswa berhasil dihapus.");
 
         return "redirect:/dosen/mahasiswa";
     }

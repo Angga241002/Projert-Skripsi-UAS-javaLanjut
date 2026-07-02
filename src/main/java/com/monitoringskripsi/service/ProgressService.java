@@ -1,20 +1,18 @@
 package com.monitoringskripsi.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.monitoringskripsi.entity.Progress;
+import com.monitoringskripsi.entity.Skripsi;
 
 public interface ProgressService {
 
     List<Progress> findAll();
 
-    Optional<Progress> findById(Long id);
+    List<Progress> findBySkripsi(Skripsi skripsi);
 
     Progress save(Progress progress);
 
-    void deleteById(Long id);
-
-    List<Progress> search(String keyword);
+    Progress findById(Long id);
 
 }

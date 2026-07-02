@@ -1,4 +1,4 @@
-package com.monitoringskripsi.service.impl;
+package com.monitoringskripsi.service.Impl;
 
 public class UserServiceImpl {
     

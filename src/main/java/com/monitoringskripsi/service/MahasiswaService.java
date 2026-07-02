@@ -6,15 +6,25 @@ import org.springframework.stereotype.Service;
 
 import com.monitoringskripsi.model.Mahasiswa;
 import com.monitoringskripsi.repository.MahasiswaRepository;
+import com.monitoringskripsi.repository.UserRepository;
 
 @Service
 public class MahasiswaService {
 
     private final MahasiswaRepository mahasiswaRepository;
+    private final MahasiswaRepository mahasiswaRepository;
+    private final UserRepository userRepository;
 
-    public MahasiswaService(MahasiswaRepository mahasiswaRepository) {
-        this.mahasiswaRepository = mahasiswaRepository;
-    }
+    public MahasiswaService(
+
+        MahasiswaRepository mahasiswaRepository,
+
+        UserRepository userRepository){
+
+    this.mahasiswaRepository = mahasiswaRepository;
+    this.userRepository = userRepository;
+
+}
 
     // Menampilkan semua mahasiswa
     public List<Mahasiswa> getAllMahasiswa() {
@@ -59,6 +69,22 @@ public class MahasiswaService {
 
 public Mahasiswa findByNim(String nim) {
     return mahasiswaRepository.findByNim(nim);
+}
+
+public Mahasiswa getMahasiswaLogin() {
+
+    String username = SecurityUtil.getUsername();
+
+    User user = userRepository
+            .findByUsername(username)
+            .orElse(null);
+
+    if(user == null){
+        return null;
+    }
+
+    return mahasiswaRepository.findByUser(user);
+
 }
 
 }

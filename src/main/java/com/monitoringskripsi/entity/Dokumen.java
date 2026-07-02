@@ -31,6 +31,12 @@ public class Dokumen {
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
 
+    @Column(name = "jenis_dokumen")
+    private String jenisDokumen;
+
+    @Column(name = "keterangan")
+    private String keterangan;
+
     @PrePersist
     public void prePersist() {
         uploadedAt = LocalDateTime.now();

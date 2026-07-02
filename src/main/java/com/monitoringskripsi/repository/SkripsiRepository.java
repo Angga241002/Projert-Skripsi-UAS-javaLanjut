@@ -23,4 +23,6 @@ public interface SkripsiRepository extends JpaRepository<Skripsi, Long> {
 
     List<Skripsi> findByJudulContainingIgnoreCase(String judul);
 
+    Skripsi findFirstByMahasiswa(Mahasiswa mahasiswa);
+
 }

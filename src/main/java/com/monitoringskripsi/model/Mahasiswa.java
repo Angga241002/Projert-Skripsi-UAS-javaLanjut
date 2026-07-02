@@ -1,6 +1,8 @@
 package com.monitoringskripsi.model;
 
 import com.monitoringskripsi.entity.Skripsi;
+import com.monitoringskripsi.entity.User;
+
 
 import jakarta.persistence.*;
 import java.util.List;
@@ -28,11 +30,16 @@ public class Mahasiswa {
     @Column(nullable = false)
     private Integer angkatan;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Mahasiswa() {
     }
+
+    // =========================
+    // GETTER & SETTER
+    // =========================
 
     public Long getId() {
         return id;
@@ -82,12 +89,12 @@ public class Mahasiswa {
         this.angkatan = angkatan;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @OneToMany(mappedBy = "mahasiswa")
